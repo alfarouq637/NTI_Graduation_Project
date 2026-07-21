@@ -23,12 +23,15 @@ st.markdown('''
         margin-bottom: 10px;
         box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
         min-height: 210px;
-        dispplay: flex;
+        display: flex;
         flex-direction: column;
     }
     .team-name {font-size: 22px; font-weight: bold; color: #0083B8;}
     .role-text {font-size: 16px; font-weight: 600; opacity: 0.9;}
     .desc-text {font-size: 14px; opacity: 0.8; line-height: 1.5;}
+    [data-testid="stHeaderActionElements"] {
+        display: none !important;
+    }
 </style>
 ''', unsafe_allow_html=True)
 
