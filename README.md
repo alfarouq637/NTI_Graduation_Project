@@ -28,7 +28,7 @@ The dashboard is deployed and publicly accessible on Streamlit Community Cloud:
 
 This project uses the **IEEE-CIS Fraud Detection** dataset, provided by **Vesta Corporation**, containing real-world e-commerce transaction data labeled for fraudulent activity. The dataset combines transactional and identity information to support robust fraud detection modeling.
 
-Source: [https://www.kaggle.com/competitions/ieee-fraud-detection](https://www.kaggle.com/competitions/ieee-fraud-detection)
+Source: [IEEE-Fraud-detection](https://www.kaggle.com/competitions/ieee-fraud-detection)
 
 ## Project Structure
 
