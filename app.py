@@ -22,6 +22,9 @@ st.markdown('''
         border-left: 5px solid #FF4B4B; 
         margin-bottom: 10px;
         box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+        min-height: 210px;
+        dispplay: flex;
+        flex-direction: column;
     }
     .team-name {font-size: 22px; font-weight: bold; color: #0083B8;}
     .role-text {font-size: 16px; font-weight: 600; opacity: 0.9;}
