@@ -48,10 +48,10 @@ if page == "Home & Team":
     col1, col2, col3 = st.columns(3)
 
     with col1:
-        st.markdown('<div class="card"><p class="team-name">Mohamed Ahdy</p><p class="role-text">Data Engineering & EDA</p><p class="desc-text">Responsible for data cleaning preprocessing missing values & feature engineering</p></div>', unsafe_allow_html=True)
+        st.markdown('<div class="card"><p class="team-name">Mohamed Ahdy</p><p class="role-text">Data Engineering & EDA Lead</p><p class="desc-text">Responsible for data cleaning preprocessing missing values & feature engineering</p></div>', unsafe_allow_html=True)
 
     with col2:
-        st.markdown('<div class="card"><p class="team-name">Abdelrahman Ramadan</p><p class="role-text">AI Modeling & Tuning</p><p class="desc-text">Responsible for handling imbalanced data training baseline models & hyperparameter tuning</p></div>', unsafe_allow_html=True)
+        st.markdown('<div class="card"><p class="team-name">Abdelrahman Ramadan</p><p class="role-text">AI Modeling & Tuning Lead</p><p class="desc-text">Responsible for handling imbalanced data training baseline models & hyperparameter tuning</p></div>', unsafe_allow_html=True)
 
     with col3:
         st.markdown('<div class="card"><p class="team-name">Alfarouq Ibrahim</p><p class="role-text">Deployment & Product Lead</p><p class="desc-text">Responsible for model serialization FastAPI APIs Streamlit portal & GitHub production</p></div>', unsafe_allow_html=True)
