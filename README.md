@@ -62,8 +62,8 @@ Start the FastAPI backend server:
 python -m uvicorn api:app --reload
 ```
 
-- API base URL: `http://127.0.0.1:8000`
-- Interactive Swagger UI documentation: `http://127.0.0.1:8000/docs`
+- API base URL: `http://localhost:8000`
+- Interactive Swagger UI documentation: `http://localhost:8000/docs`
 
 ### Frontend UI
 
