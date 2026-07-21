@@ -1,5 +1,6 @@
 # IEEE-CIS Fraud Detection System
 
+![License](https://img.shields.io/badge/License-MIT-yellow.svg)
 ![Python](https://img.shields.io/badge/Python-3.9%2B-3776AB?style=for-the-badge&logo=python&logoColor=white)
 ![FastAPI](https://img.shields.io/badge/FastAPI-005571?style=for-the-badge&logo=fastapi)
 ![Streamlit](https://img.shields.io/badge/Streamlit-FF4B4B?style=for-the-badge&logo=streamlit&logoColor=white)
@@ -16,6 +17,12 @@ The **IEEE-CIS Fraud Detection System** is an end-to-end Machine Learning pipeli
 | **Mohamed Ahdy** | Data Engineering & EDA Lead | Data cleaning, missing values handling, exploratory data analysis (EDA), and feature engineering |
 | **Abdelrahman Ramadan** | AI Modeling & Tuning Lead | Imbalanced data handling (SMOTE/Undersampling), baseline model training, and hyperparameter tuning |
 | **Alfarouq Ibrahim** | Deployment & Product Lead | Joblib model serialization, FastAPI backend architecture, Streamlit UI/UX dashboard, and GitHub production pipeline |
+
+## Live Demo
+
+The dashboard is deployed and publicly accessible on Streamlit Community Cloud:
+
+[**Team 5 IEEE Fraud Detection · Streamlit**](https://ntigraduationproject.streamlit.app/)
 
 ## Dataset
 
