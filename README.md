@@ -5,9 +5,6 @@
 ![FastAPI](https://img.shields.io/badge/FastAPI-005571?style=for-the-badge&logo=fastapi)
 ![Streamlit](https://img.shields.io/badge/Streamlit-FF4B4B?style=for-the-badge&logo=streamlit&logoColor=white)
 ![Scikit-Learn](https://img.shields.io/badge/Scikit--Learn-F7931E?style=for-the-badge&logo=scikit-learn&logoColor=white)
-![Alfarouq Ibahim](https://img.shields.io/badge/Alfarouq--Ibahim-F7931E?style=for-the-badge&logo=Alfarouq-Ibahim&logoColor=white)
-![Alfarouq Ibahim](https://img.shields.io/badge/ALfarouq%20Ibrahim
-)
 
 ## Overview
 
