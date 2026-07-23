@@ -219,3 +219,7 @@ __marimo__/
 
 # MicroPython Workbench
 .mpy-workbench/
+
+# Presentation binary files
+*.pptx
+*.ppt
