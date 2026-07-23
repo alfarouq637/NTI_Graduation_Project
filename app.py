@@ -23,15 +23,12 @@ st.markdown('''
         margin-bottom: 10px;
         box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
         min-height: 210px;
-        display: flex;
+        dispplay: flex;
         flex-direction: column;
     }
     .team-name {font-size: 22px; font-weight: bold; color: #0083B8;}
     .role-text {font-size: 16px; font-weight: 600; opacity: 0.9;}
     .desc-text {font-size: 14px; opacity: 0.8; line-height: 1.5;}
-    [data-testid="stHeaderActionElements"] {
-        display: none !important;
-    }
 </style>
 ''', unsafe_allow_html=True)
 
@@ -79,8 +76,10 @@ elif page == "Fraud Detector":
             # extract clean floats from user string
             features = [float(val) for val in re.findall(r"[-+]?\d*\.\d+|\d+", user_input)]
 
-            # validate features len & run model
-            if len(features) > 0:
+            # validate features length against model expected features
+            expected_features = getattr(model, "n_features_in_", getattr(model, "n_features_", len(features)))
+
+            if len(features) == expected_features:
                 data_array = np.array(features).reshape(1, -1)
                 prediction = model.predict(data_array)[0]
 
@@ -89,10 +88,12 @@ elif page == "Fraud Detector":
                     st.error("ALERT: FRAUDULENT TRANSACTION DETECTED")
                 else:
                     st.success("STATUS: NORMAL LEGITIMATE TRANSACTION")
+            elif len(features) == 0:
+                st.warning("Please input numeric features.")
             else:
-                st.warning("Please input numeric features")
-        except Exception:
-            st.error("Error analyzing transaction data")
+                st.warning(f"Feature count mismatch! Model expects {expected_features} features, but got {len(features)}.")
+        except Exception as e:
+            st.error(f"Error analyzing transaction data: {str(e)}")
 
 # page 3 general project specifications
 elif page == "Project Info":
