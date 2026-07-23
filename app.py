@@ -406,35 +406,42 @@ elif page == "Fraud Detector":
                 # Build the feature array in the correct order
                 feature_array = np.array([[values[f] for f in FEATURE_NAMES]])
 
-                # Handle both LightGBM Booster (returns probabilities) and
-                # sklearn-style models (returns class labels)
-                raw_output = model.predict(feature_array)
-
-                # LightGBM Booster.predict() returns probabilities (0.0 – 1.0)
-                # sklearn .predict() returns class labels (0 or 1)
-                if hasattr(model, "predict_proba"):
-                    # sklearn-style: use predict directly
-                    prediction = int(raw_output[0])
-                    proba = model.predict_proba(feature_array)[0][1]
-                elif 0 <= raw_output[0] <= 1 and not isinstance(raw_output[0], (int, np.integer)):
-                    # LightGBM Booster: output is a probability
-                    proba = float(raw_output[0])
-                    prediction = 1 if proba >= FRAUD_THRESHOLD else 0
+                # Verify expected feature count if model attributes exist
+                n_expected = getattr(model, "n_features_in_", getattr(model, "n_features_", len(FEATURE_NAMES)))
+                if n_expected != len(FEATURE_NAMES):
+                    st.warning(
+                        f"⚠️ **Feature Mismatch Notice**: The current model file (`models/fraud_model.pkl`) expects "
+                        f"**{n_expected}** features (type: `{type(model).__name__}`), but the full pipeline provides **{len(FEATURE_NAMES)}** features.\n\n"
+                        f"Once your team exports the final 379-feature model from **Notebook 01**, overwrite `models/fraud_model.pkl` to test real predictions."
+                    )
                 else:
-                    # Fallback: treat as class label
-                    prediction = int(raw_output[0])
-                    proba = None
+                    # Handle both LightGBM Booster (returns probabilities) and
+                    # sklearn-style models (returns class labels)
+                    raw_output = model.predict(feature_array)
 
-                st.write("---")
-                if prediction == 1:
-                    st.error("🚨 ALERT: FRAUDULENT TRANSACTION DETECTED")
-                    if proba is not None:
-                        st.metric("Fraud Probability", f"{proba:.2%}", delta=f"Threshold: {FRAUD_THRESHOLD:.0%}")
-                else:
-                    st.success("✅ STATUS: NORMAL LEGITIMATE TRANSACTION")
-                    if proba is not None:
-                        st.metric("Fraud Probability", f"{proba:.2%}", delta=f"Threshold: {FRAUD_THRESHOLD:.0%}",
-                                  delta_color="off")
+                    if hasattr(model, "predict_proba"):
+                        # sklearn-style: use predict directly
+                        prediction = int(raw_output[0])
+                        proba = float(model.predict_proba(feature_array)[0][1])
+                    elif 0 <= raw_output[0] <= 1 and not isinstance(raw_output[0], (int, np.integer)):
+                        # LightGBM Booster: output is a probability
+                        proba = float(raw_output[0])
+                        prediction = 1 if proba >= FRAUD_THRESHOLD else 0
+                    else:
+                        # Fallback: treat as class label
+                        prediction = int(raw_output[0])
+                        proba = None
+
+                    st.write("---")
+                    if prediction == 1:
+                        st.error("🚨 ALERT: FRAUDULENT TRANSACTION DETECTED")
+                        if proba is not None:
+                            st.metric("Fraud Probability", f"{proba:.2%}", delta=f"Threshold: {FRAUD_THRESHOLD:.0%}")
+                    else:
+                        st.success("✅ STATUS: NORMAL LEGITIMATE TRANSACTION")
+                        if proba is not None:
+                            st.metric("Fraud Probability", f"{proba:.2%}", delta=f"Threshold: {FRAUD_THRESHOLD:.0%}",
+                                      delta_color="off")
             except Exception as e:
                 st.error(f"Error analyzing transaction data: {str(e)}")
 
