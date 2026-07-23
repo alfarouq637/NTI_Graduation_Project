@@ -1,23 +1,23 @@
-from fastapi import FastAPI, HTTPException
-from pydantic import BaseModel
 import joblib
 import numpy as np
+from fastapi import FastAPI, HTTPException
+from pydantic import BaseModel
 
 app = FastAPI(
-    title="IEEE-CIS Fraud Detection API",
-    description="Real-time fraud prediction API for IEEE-CIS transaction data.",
+    title="IEEE CIS Fraud Detection API",
+    description="Real time fraud prediction API for IEEE CIS transaction data",
     version="1.0.0",
 )
 
-# fraud detection threshold from Notebook 01 Section 21 (max F1)
+# fraud threshold value max f1
 FRAUD_THRESHOLD = 0.77
 
-# load model at startup
+# load model startup
 try:
     model = joblib.load("models/fraud_model.pkl")
 except Exception as e:
     model = None
-    print(f"WARNING: Failed to load model: {e}")
+    print(f"Failed to load model {e}")
 
 
 class Transaction(BaseModel):
@@ -32,12 +32,11 @@ def root():
 @app.post("/predict")
 def predict(data: Transaction):
     if model is None:
-        raise HTTPException(status_code=503, detail="Model not loaded.")
+        raise HTTPException(status_code=503, detail="Model not loaded")
 
     input_array = np.array(data.features).reshape(1, -1)
 
-    # handle both LightGBM Booster (returns probabilities) and
-    # sklearn-style models (returns class labels)
+    # predict probabilities & class labels
     raw_output = model.predict(input_array)
 
     if hasattr(model, "predict_proba"):

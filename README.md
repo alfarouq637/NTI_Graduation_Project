@@ -22,7 +22,7 @@ The **IEEE-CIS Fraud Detection System** is an end-to-end Machine Learning pipeli
 
 The dashboard is deployed and publicly accessible on Streamlit Community Cloud:
 
-[**Team 5 IEEE Fraud Detection · Streamlit**](https://ntigraduationproject.streamlit.app/)
+[**Team 5 IEEE Fraud Detection Streamlit**](https://ntigraduationproject.streamlit.app/)
 
 ## Dataset
 
@@ -87,20 +87,20 @@ The **Fraud Detector** page provides slider-based input for all **379 model feat
 
 | Section | Features | Description |
 |---|---|---|
-| 📋 Transaction Core | TransactionDT, TransactionAmt | Timestamp and dollar amount |
-| 🏷️ Product Code | ProductCD (one-hot: H, R, S, W) | Product category |
-| 💳 Card Information | card1–card5, card4/card6 (one-hot), addr1, addr2, dist1 | Payment card and billing details |
-| 📧 Email Domains | P_emaildomain, R_emaildomain | Frequency-encoded email domains |
-| 🔢 Count Features | C1–C14 | Transaction count aggregations |
-| ⏱️ Time Delta Features | D1–D5, D10, D11, D15 | Time gaps between events |
-| 🔐 Match Features | M1–M9, M4 (one-hot) | Name/address/email match flags |
-| 🔬 Vesta Features | V1–V137, V167–V321 | Anonymous Vesta payment features |
-| 🆔 Identity Features | id_01–id_38 (survivors) | Device and network identity |
-| 📱 Device Features | DeviceType, DeviceInfo | Device type and info |
-| 🕐 Engineered: Time | TransactionHour, TransactionDay | Derived time features |
-| 📊 Card Aggregation | card1_amt_mean/std, ratio | Per-card spending stats |
-| 👤 UID Aggregation | uid_count/mean/std, ratio | Pseudo-customer aggregations |
-| ⚡ UID2 & Velocity | uid2_count/mean, ratio, time_since_last | Broader identity & velocity |
+| Transaction Core | TransactionDT, TransactionAmt | Timestamp and dollar amount |
+| Product Code | ProductCD (one-hot: H, R, S, W) | Product category |
+| Card Information | card1–card5, card4/card6 (one-hot), addr1, addr2, dist1 | Payment card and billing details |
+| Email Domains | P_emaildomain, R_emaildomain | Frequency-encoded email domains |
+| Count Features | C1–C14 | Transaction count aggregations |
+| Time Delta Features | D1–D5, D10, D11, D15 | Time gaps between events |
+| Match Features | M1–M9, M4 (one-hot) | Name/address/email match flags |
+| Vesta Features | V1–V137, V167–V321 | Anonymous Vesta payment features |
+| Identity Features | id_01–id_38 (survivors) | Device and network identity |
+| Device Features | DeviceType, DeviceInfo | Device type and info |
+| Engineered: Time | TransactionHour, TransactionDay | Derived time features |
+| Card Aggregation | card1_amt_mean/std, ratio | Per-card spending stats |
+| UID Aggregation | uid_count/mean/std, ratio | Pseudo-customer aggregations |
+| UID2 & Velocity | uid2_count/mean, ratio, time_since_last | Broader identity & velocity |
 
 All fields have **default values** representing a typical legitimate transaction. You can expand any section, adjust individual features with sliders, and click **Analyze Transaction** to get a real-time prediction.
 
@@ -111,7 +111,7 @@ Send a POST request with 379 float features to the `/predict` endpoint:
 ```bash
 curl -X POST http://localhost:8000/predict \
   -H "Content-Type: application/json" \
-  -d '{"features": [5000000.0, 68.5, 0, 0, 0, 1, 10000, 321, 150, 0, 0, 1, 226, 0, 1, 0, 299, 87, 0, 100000, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 14, 14, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 12, 3, 100, 80, 1, 3, 100, 50, 1, 2, 100, 1, -1]}'
+  -d '{"features": [5000000.0, 68.5, 0, 0, 0, 1, 10000, 321, 150, 0, 0, 1, 226, 0, 1, 0, 299, 87, 0, 100000, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 14, 14, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 12, 3, 100, 80, 1, 3, 100, 50, 1, 2, 100, 1, -1]}'
 ```
 
 ## Methodology & Workflow
