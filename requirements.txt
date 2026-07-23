@@ -3,6 +3,7 @@ uvicorn
 pydantic
 streamlit
 scikit-learn
+lightgbm
 pandas
 numpy
 joblib
