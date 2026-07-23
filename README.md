@@ -21,8 +21,7 @@ The **IEEE-CIS Fraud Detection System** is an end-to-end Machine Learning pipeli
 Click the preview banner below to watch the short screen recording demonstrating the interactive Streamlit dashboard interface in action:
 
 <a href="https://drive.google.com/file/d/1m63gWLOY1r8yuLGS8FQU1PsnseIPvfrI/view?usp=sharing" target="_blank">
-  <img src="<img width="1536" height="740" alt="image" src="https://github.com/user-attachments/assets/17a8a5de-c560-4449-9270-25541f0dda8b" />
-" alt="Watch Interactive Dashboard UI Demo Video" width="100%" style="border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+  <img src="https://github.com/user-attachments/assets/17a8a5de-c560-4449-9270-25541f0dda8b" alt="Watch Interactive Dashboard UI Demo Video" width="100%" style="border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
 </a>
 
 <p align="center">
