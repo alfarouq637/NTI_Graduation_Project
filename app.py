@@ -1,3 +1,4 @@
+import os
 import joblib
 import numpy as np
 import streamlit as st
@@ -37,9 +38,9 @@ st.sidebar.markdown("### NTI IEEE Fraud Detection")
 page = st.sidebar.radio("Navigation", ["Home & Team", "Fraud Detector", "Project Info"])
 
 
-# load model cache error
+# load model cache invalidate by file mtime
 @st.cache_resource
-def load_model():
+def load_model(mtime):
     try:
         return joblib.load("models/fraud_model.pkl")
     except Exception as e:
@@ -47,7 +48,10 @@ def load_model():
         return None
 
 
-model = load_model()
+# check file mtime for dynamic auto reload
+model_path = "models/fraud_model.pkl"
+model_mtime = os.path.getmtime(model_path) if os.path.exists(model_path) else 0.0
+model = load_model(model_mtime)
 
 # feature names list 379 features
 FEATURE_NAMES = [
@@ -357,36 +361,40 @@ elif page == "Fraud Detector":
             st.error("Model not loaded Please check model file exist")
         else:
             try:
-                feature_array = np.array([[values[f] for f in FEATURE_NAMES]])
+                # Alias column name mapping for model alignment
+                values["card6_debit_or_credit"] = values.get("card6_debit or credit", 0)
 
-                n_expected = getattr(model, "n_features_in_", getattr(model, "n_features_", len(FEATURE_NAMES)))
-                if n_expected != len(FEATURE_NAMES):
-                    st.warning(
-                        f"Feature Mismatch Notice current model expect {n_expected} feature type {type(model).__name__} but pipeline give {len(FEATURE_NAMES)} feature please update model file"
-                    )
+                # Get feature column list from model feature_name if available
+                if hasattr(model, "feature_name"):
+                    target_cols = model.feature_name()
                 else:
-                    raw_output = model.predict(feature_array)
+                    target_cols = FEATURE_NAMES
 
-                    if hasattr(model, "predict_proba"):
-                        prediction = int(raw_output[0])
-                        proba = float(model.predict_proba(feature_array)[0][1])
-                    elif 0 <= raw_output[0] <= 1 and not isinstance(raw_output[0], (int, np.integer)):
-                        proba = float(raw_output[0])
-                        prediction = 1 if proba >= FRAUD_THRESHOLD else 0
-                    else:
-                        prediction = int(raw_output[0])
-                        proba = None
+                feature_array = np.array([[values.get(f, 0.0) for f in target_cols]])
 
-                    st.write("---")
-                    if prediction == 1:
-                        st.error("ALERT FRAUDULENT TRANSACTION DETECTED")
-                        if proba is not None:
-                            st.metric("Fraud Probability", f"{proba:.2%}", delta=f"Threshold {FRAUD_THRESHOLD:.0%}")
-                    else:
-                        st.success("STATUS NORMAL LEGITIMATE TRANSACTION")
-                        if proba is not None:
-                            st.metric("Fraud Probability", f"{proba:.2%}", delta=f"Threshold {FRAUD_THRESHOLD:.0%}",
-                                      delta_color="off")
+                n_expected = len(target_cols)
+                raw_output = model.predict(feature_array)
+
+                if hasattr(model, "predict_proba"):
+                    prediction = int(raw_output[0])
+                    proba = float(model.predict_proba(feature_array)[0][1])
+                elif 0 <= raw_output[0] <= 1 and not isinstance(raw_output[0], (int, np.integer)):
+                    proba = float(raw_output[0])
+                    prediction = 1 if proba >= FRAUD_THRESHOLD else 0
+                else:
+                    prediction = int(raw_output[0])
+                    proba = None
+
+                st.write("---")
+                if prediction == 1:
+                    st.error("ALERT FRAUDULENT TRANSACTION DETECTED")
+                    if proba is not None:
+                        st.metric("Fraud Probability", f"{proba:.2%}", delta=f"Threshold {FRAUD_THRESHOLD:.0%}")
+                else:
+                    st.success("STATUS NORMAL LEGITIMATE TRANSACTION")
+                    if proba is not None:
+                        st.metric("Fraud Probability", f"{proba:.2%}", delta=f"Threshold {FRAUD_THRESHOLD:.0%}",
+                                  delta_color="off")
             except Exception as e:
                 st.error(f"Error analyze data {str(e)}")
 
@@ -405,7 +413,10 @@ elif page == "Project Info":
     st.write("### Model Details")
     if model is not None:
         st.write(f"- **Model type**: `{type(model).__name__}`")
-        n_features = getattr(model, "n_features_in_", getattr(model, "n_features_", "N/A"))
+        if hasattr(model, "num_feature"):
+            n_features = model.num_feature()
+        else:
+            n_features = getattr(model, "n_features_in_", getattr(model, "n_features_", "N/A"))
         st.write(f"- **Expected features**: {n_features}")
         st.write(f"- **Fraud threshold**: {FRAUD_THRESHOLD}")
     else:
