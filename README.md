@@ -119,5 +119,5 @@ curl -X POST http://localhost:8000/predict \
 1. **Data Cleaning** — Handling missing values, correcting data types, and removing inconsistencies across the transactional and identity datasets.
 2. **Feature Engineering** — Constructing informative features from raw transaction and identity attributes to improve model discriminative power.
 3. **Imbalanced Data Handling** — Applying SMOTE (Synthetic Minority Over-sampling Technique) and Undersampling strategies to address the highly imbalanced fraud/non-fraud class distribution.
-4. **Model Comparison** — Training and evaluating multiple algorithms, including Logistic Regression, Random Forest, XGBoost, LightGBM, and CatBoost, to identify the best-performing model based on evaluation metrics.
+4. **Model Comparison** — Training and evaluating multiple algorithms, including Logistic Regression and LightGBM , to identify the best-performing model based on evaluation metrics.
 5. **Real-Time Deployment** — Serializing the final model with Joblib and deploying it through a FastAPI backend, paired with a Streamlit dashboard for real-time, interactive fraud prediction.
